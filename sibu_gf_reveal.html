@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sibu's Girlfriend Reveal</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #fff0f5;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1, p {
+      margin-top: 40px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      margin-top: 20px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #finalMessage {
+      font-size: 24px;
+      margin-top: 30px;
+      font-weight: bold;
+      color: #d6336c;
+    }
+
+    #memePart img {
+      margin-top: 20px;
+      width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px gray;
+    }
+
+    /* Loading bar */
+    #loadingBarContainer {
+      width: 60%;
+      background-color: #ddd;
+      margin: 20px auto;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    #loadingBar {
+      width: 0%;
+      height: 20px;
+      background-color: #ff69b4;
+    }
+
+    /* Flower animation */
+    .flower {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://i.imgur.com/LtGnM1u.png');
+      background-size: cover;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Are you going to see Sibu's Girlfriend? 🤫</h1>
+  <button onclick="showQuestion()">Yes 😍</button>
+
+  <div id="questionPart" class="hidden">
+    <p><strong>Answer this to unlock her identity:</strong></p>
+    <p>"Sibu has 3 smart speakers. Each tells 2 lies and 1 truth per day. After 5 days, how many total lies has Sibu heard?"</p>
+    <input type="text" id="answer" placeholder="Your answer here">
+    <button onclick="checkAnswer()">Submit</button>
+  </div>
+
+  <div id="loadingBarContainer" class="hidden">
+    <div id="loadingBar"></div>
+  </div>
+
+  <div id="finalMessage" class="hidden"></div>
+
+  <div id="memePart" class="hidden">
+    <p>😂 Sibu made you fool! Alexa is just a device!!</p>
+    <img src="https://i.imgflip.com/7r4m7b.jpg" alt="Alexa Meme">
+  </div>
+
+  <!-- Floating flowers -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      let flower = document.createElement("div");
+      flower.classList.add("flower");
+      flower.style.left = Math.random() * 100 + "vw";
+      flower.style.animationDelay = Math.random() * 10 + "s";
+      flower.style.animationDuration = 8 + Math.random() * 5 + "s";
+      document.body.appendChild(flower);
+    }
+  </script>
+
+  <script>
+    function showQuestion() {
+      document.getElementById("questionPart").classList.remove("hidden");
+    }
+
+    function checkAnswer() {
+      const answer = document.getElementById("answer").value.trim();
+      const correctAnswer = "30"; // 3 speakers × 2 lies × 5 days = 30
+      const loadingContainer = document.getElementById("loadingBarContainer");
+      const loadingBar = document.getElementById("loadingBar");
+      const finalMsg = document.getElementById("finalMessage");
+      const memePart = document.getElementById("memePart");
+
+      if (answer === correctAnswer) {
+        document.getElementById("questionPart").classList.add("hidden");
+        loadingContainer.classList.remove("hidden");
+        
+        let width = 0;
+        let interval = setInterval(() => {
+          width += 1;
+          loadingBar.style.width = width + "%";
+          if (width >= 100) {
+            clearInterval(interval);
+            loadingContainer.classList.add("hidden");
+            finalMsg.innerText = "Access Granted! Unlocking truth…";
+            finalMsg.classList.remove("hidden");
+            memePart.classList.remove("hidden");
+          }
+        }, 50); // 100 * 50ms = 5 seconds
+      } else {
+        finalMsg.innerText = "Wrong answer! Sibu's girlfriend stays hidden! 😝";
+        finalMsg.classList.remove("hidden");
+        memePart.classList.add("hidden");
+      }
+    }
+  </script>
+
+</body>
+</html>
